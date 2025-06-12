@@ -4,6 +4,11 @@ version = "0.1.0"
 edition = "2024"
 resolver = "3"
 license = "MIT OR Apache-2.0"
+repository = "https://github.com/AleVul/maib-client"
+description = "An unofficial Rust client for MAIB API"
+readme = "README.md"
+keywords = ["maib", "api", "http", "client"]
+categories = ["web-programming::http-client"]
 
 [dependencies]
 base64 = "0.22.1"
