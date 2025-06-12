@@ -164,11 +164,11 @@ impl Client {
             .await
             .map_err(|err| Error::Http(format!("error sending request: {err}")))?;
 
-        if res.status() == StatusCode::UNAUTHORIZED {
-            return Err(Error::Http("Authorization error".to_owned()));
-        }
-
         let status = res.status().as_u16();
+
+        if res.status() == 401 {
+            return Err(Error::Unauthorized);
+        }
 
         if status >= 400 && status < 500 {
             if res.status() == StatusCode::UNAUTHORIZED {

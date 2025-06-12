@@ -2,8 +2,16 @@ pub type Result<T> = core::result::Result<T, Error>;
 
 #[derive(Debug)]
 pub enum Error {
+    /// Access token has expired or was not set.
+    Unauthorized,
+
+    /// An error occurred during a http request.
     Http(String),
+
+    /// An error occrred during (de)serialization.
     Json(String),
+
+    /// API server responded with errors.
     Api(Vec<ApiError>),
 }
 
