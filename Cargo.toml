@@ -9,6 +9,9 @@ description = "An unofficial Rust client for MAIB API"
 readme = "README.md"
 keywords = ["maib", "api", "http", "client"]
 categories = ["web-programming::http-client"]
+exclude = [
+    ".env",
+]
 
 [dependencies]
 base64 = "0.22.1"
