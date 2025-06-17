@@ -56,9 +56,23 @@ impl core::fmt::Display for AccessToken {
 #[derive(Debug)]
 pub struct AccessTokenDuration(core::time::Duration);
 
+impl AccessTokenDuration {
+    pub const fn new(value: core::time::Duration) -> Self {
+        return Self(value);
+    }
+}
+
 impl From<AccessTokenDuration> for core::time::Duration {
     fn from(value: AccessTokenDuration) -> Self {
         return value.0;
+    }
+}
+
+impl core::ops::Add<std::time::Instant> for AccessTokenDuration {
+    type Output = std::time::Instant;
+
+    fn add(self, rhs: std::time::Instant) -> Self::Output {
+        rhs + self.0
     }
 }
 

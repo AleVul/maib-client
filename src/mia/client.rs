@@ -9,6 +9,7 @@ use crate::{
     },
 };
 
+#[derive(Debug)]
 pub struct Client {
     http_client: reqwest::Client,
     api_base_url: String,
