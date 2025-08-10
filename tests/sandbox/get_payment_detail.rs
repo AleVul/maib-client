@@ -21,7 +21,7 @@ pub async fn should_get_payment_detail() {
         "".to_owned(),
     );
 
-    let result = client.create_qr(fixed, &token).await.unwrap();
+    let result = client.create_qr(&fixed, &token).await.unwrap();
     let pay_id = common::simulate_payment(&result.qr_id, Decimal::from(100), &token).await;
 
     assert!(pay_id.is_ok());

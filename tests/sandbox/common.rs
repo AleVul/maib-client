@@ -36,7 +36,7 @@ pub async fn create_fix_payment_qr() -> (Client, AccessToken, response::CreateQR
         "".to_owned(),
     );
 
-    let response = client.create_qr(fixed, &token).await;
+    let response = client.create_qr(&fixed, &token).await;
 
     return (client, token, response.unwrap());
 }

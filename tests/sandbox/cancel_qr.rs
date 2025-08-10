@@ -23,7 +23,7 @@ pub async fn should_cancel_qr() {
         "".to_owned(),
     );
 
-    let result = client.create_qr(fixed, &token).await;
+    let result = client.create_qr(&fixed, &token).await;
 
     assert!(result.is_ok());
 

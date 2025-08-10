@@ -1,11 +1,9 @@
-use reqwest::StatusCode;
-
 use crate::{
     error::{Error, Result},
     models::{
-        AccessToken, ClientId, ClientSecret, PaymentId, QRId,
         request::{self, CancelQR, GetAccessToken, RefundPayment},
         response::{self, AuthToken},
+        AccessToken, ClientId, ClientSecret, PaymentId, QRId,
     },
 };
 
@@ -45,7 +43,7 @@ impl Client {
 
     pub async fn create_qr<'a, 'b>(
         &'a self,
-        payload: request::CreateQR<'b>,
+        payload: &request::CreateQR<'b>,
         token: &'a AccessToken,
     ) -> Result<response::CreateQRResponse> {
         let input = SendRequestInput {
@@ -109,11 +107,10 @@ impl Client {
     pub async fn refund_payment(
         &self,
         id: &PaymentId,
-        reason: String,
+        payload: &RefundPayment,
         token: &AccessToken,
     ) -> Result<response::RefundPayment> {
         let url = format!("/v2/mia/payments/{id}/refund");
-        let payload = RefundPayment { reason };
 
         let input = SendRequestInput {
             method: reqwest::Method::POST,
@@ -128,7 +125,7 @@ impl Client {
     async fn send_request<'a, B, R>(&self, input: SendRequestInput<'a, B>) -> Result<R>
     where
         B: serde::Serialize,
-        R: serde::de::DeserializeOwned,
+        R: serde::de::DeserializeOwned + core::fmt::Debug,
     {
         use reqwest::header::{self, HeaderMap, HeaderValue};
 
@@ -172,12 +169,10 @@ impl Client {
         }
 
         if status >= 400 && status < 500 {
-            if res.status() == StatusCode::UNAUTHORIZED {
-                return Err(Error::Http(format!(
-                    "we made a bad request, status: {}",
-                    status
-                )));
-            }
+            return Err(Error::Http(format!(
+                "we made a bad request, status: {}",
+                status
+            )));
         }
 
         let res: response::ApiResponse<R> = res

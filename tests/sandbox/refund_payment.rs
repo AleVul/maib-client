@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
 use chrono::{Duration, Utc};
-use maib_client::models::request::CreateQR;
+use maib_client::models::request::{CreateQR, RefundPayment};
 use rust_decimal::Decimal;
 
 use crate::common;
@@ -21,14 +21,14 @@ pub async fn should_refund_payment() {
         "".to_owned(),
     );
 
-    let result = client.create_qr(fixed, &token).await.unwrap();
+    let result = client.create_qr(&fixed, &token).await.unwrap();
     let pay_id = common::simulate_payment(&result.qr_id, Decimal::from(100), &token).await;
 
     assert!(pay_id.is_ok());
     let pay_id = pay_id.unwrap();
 
     let detail = client
-        .refund_payment(&pay_id, "foobar".to_owned(), &token)
+        .refund_payment(&pay_id, &RefundPayment { reason: "foobar".to_owned() }, &token)
         .await;
 
     eprintln!("{detail:?}");

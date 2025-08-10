@@ -20,7 +20,9 @@ pub async fn should_create_qr() {
         "".to_owned(),
     );
 
-    let result = client.create_qr(fixed, &token).await;
+    let result = client.create_qr(&fixed, &token).await;
+
+    println!("{result:?}");
 
     assert!(result.is_ok());
 }

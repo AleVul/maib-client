@@ -402,6 +402,9 @@ pub mod request {
     }
 
     #[derive(Debug, serde::Serialize)]
+    pub struct QRExpiresAt<'a>(&'a str);
+
+    #[derive(Debug, serde::Serialize)]
     #[serde(rename_all = "camelCase")]
     pub struct CancelQR {
         pub reason: String,
