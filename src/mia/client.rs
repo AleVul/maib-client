@@ -168,7 +168,7 @@ impl Client {
             return Err(Error::Unauthorized);
         }
 
-        if status >= 400 && status < 500 {
+        if status >= 404 && status < 500 {
             return Err(Error::Http(format!(
                 "we made a bad request, status: {}",
                 status
