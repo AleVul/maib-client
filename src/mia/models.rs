@@ -121,7 +121,7 @@ impl core::fmt::Display for Signature {
 }
 
 /// Signature key provided by MAIB.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct SignatureKey(Arc<str>);
 
 impl SignatureKey {
